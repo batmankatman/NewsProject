@@ -52,8 +52,12 @@ def main():
     random.seed(RANDOM_STATE)
 
     # Download required NLTK data
-    nltk.download("stopwords")
-    nltk.download("movie_reviews")
+    for resource in [
+        "stopwords", "movie_reviews", "vader_lexicon",
+        "punkt_tab", "averaged_perceptron_tagger_eng",
+        "maxent_ne_chunker_tab"
+    ]:
+        nltk.download(resource)
 
     # PART 1: BBC Genre Classification
     print("\nLoading BBC News dataset...")
