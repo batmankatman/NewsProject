@@ -13,12 +13,7 @@ _ALPHANUM = re.compile(r"[^a-zA-Z0-9]")
 
 # Module-level stop-word set — loaded once, shared by all callers.
 # Uses a frozenset for O(1) membership tests.
-try:
-    STOP_WORDS: frozenset = frozenset(w.lower() for w in stopwords.words("english"))
-except LookupError:
-    import nltk
-    nltk.download("stopwords", quiet=True)
-    STOP_WORDS = frozenset(w.lower() for w in stopwords.words("english"))
+STOP_WORDS: frozenset = frozenset(w.lower() for w in stopwords.words("english"))
 
 
 def preprocess_tokens(

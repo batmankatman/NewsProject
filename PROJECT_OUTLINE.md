@@ -196,5 +196,4 @@ Scores:    business=+0.0  politics=-200.5  tech=-228.7  ...
 nltk
 feedparser        # RSS feed parsing
 scikit-learn      # metrics, CV (already used)
-streamlit         # optional: dashboard demo
 ```
