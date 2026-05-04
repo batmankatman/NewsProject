@@ -59,9 +59,7 @@ def main():
     ]:
         nltk.download(resource, quiet=True)
 
-    # ------------------------------------------------------------------
     # PART 1: BBC Genre Classification
-    # ------------------------------------------------------------------
     print("\nLoading BBC News dataset...")
     print(f"Preprocessing: stopwords={USE_STOPWORDS} | min_len={MIN_TOKEN_LEN} | binarized={BINARIZE}")
 
@@ -90,18 +88,14 @@ def main():
     print("Confusion matrix:")
     print(confusion_matrix(y_test, y_pred, labels=genre_model.classes))
 
-    # ------------------------------------------------------------------
     # PART 2: Keyword Extraction (TF-IDF over full BBC corpus)
-    # ------------------------------------------------------------------
     print("\n=== Keyword Extraction + Sentiment on Sample Articles ===")
     docs_ir   = [tokenize_doc(text) for text in raw_texts]
     inv_index = build_index(docs_ir)
     tfidf     = compute_tfidf(docs_ir, inv_index)
     N_corpus  = len(docs_ir)
 
-    # ------------------------------------------------------------------
     # PART 3: Sentiment — NB on movie_reviews + VADER
-    # ------------------------------------------------------------------
     print(f"\nLoading movie_reviews corpus...")
     print(f"Preprocessing: stopwords=False | min_len={MIN_TOKEN_LEN} | binarized={BINARIZE}")
     sent_docs, sent_labels, _ = load_movie_reviews_dataset()
@@ -113,8 +107,7 @@ def main():
     sent_model = sent_clf.train(sent_docs, sent_labels)
     analyzer   = SentimentIntensityAnalyzer()
 
-    # Show SAMPLE_N articles with full keyword + sentiment output
-    # (Merges old Parts 2 & 3 loops — no duplication)
+    # Show SAMPLE_N articles with keyword and sentiment output
     print(f"\n=== Sample Article Analysis (n={SAMPLE_N}) ===")
     for i in range(SAMPLE_N):
         doc_tfidf_scores = {
@@ -125,18 +118,14 @@ def main():
         result = analyze_article(
             raw_texts[i], genre_model, sent_model, analyzer, inv_index, N_corpus
         )
-        # Override tfidf_kw with corpus-matrix scores for these training articles
+        # Use corpus-matrix scores for these training articles
         result["tfidf_kw"] = get_tfidf_keywords(doc_tfidf_scores, top_n=10)
         print_article(i, raw_texts[i], result, true_label=labels[i])
 
-    # ------------------------------------------------------------------
     # PART 4: Live RSS Demo
-    # ------------------------------------------------------------------
     demo_rss(genre_model, sent_model, analyzer, inv_index, N_corpus)
 
-    # ------------------------------------------------------------------
     # PART 5: Interactive Demo (opt-in)
-    # ------------------------------------------------------------------
     if run_inter:
         demo_interactive(genre_model, sent_model, analyzer, inv_index, N_corpus)
     else:

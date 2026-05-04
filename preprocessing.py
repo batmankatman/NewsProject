@@ -7,9 +7,7 @@ from typing import Iterable, List
 
 from nltk.corpus import stopwords
 
-# ---------------------------------------------------------------------------
-# Compiled regexes (from NaiveBayes.py and PortStemmer.py)
-# ---------------------------------------------------------------------------
+# Compiled regexes from NaiveBayes.py and PortStemmer.py
 _WORD_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_+.-]*$")
 _ALPHANUM = re.compile(r"[^a-zA-Z0-9]")
 

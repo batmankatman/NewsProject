@@ -30,7 +30,7 @@ def analyze_article(
       3. POS keywords + NER + bigram collocations
       4. Sentiment — NB (movie_reviews) + VADER
     """
-    # Genre
+    # Genre classification
     genre_tokens     = preprocess_tokens(text.split(), use_stopwords=USE_STOPWORDS, min_len=MIN_TOKEN_LEN)
     genre_log_scores = genre_model.predict_score(genre_tokens)
     predicted_genre  = max(genre_log_scores, key=genre_log_scores.get)
@@ -42,7 +42,7 @@ def analyze_article(
     tfidf_sc = score_new_doc(doc_ir, inv_index, N_corpus)
     tfidf_kw = get_tfidf_keywords(tfidf_sc, top_n=10)
 
-    # POS, NER, collocations
+    # POS keywords, NER, collocations
     pos_kw = get_pos_keywords(text, top_n=10)
     ner    = extract_named_entities(text)
     colls  = get_bigram_collocations(text, top_n=5)

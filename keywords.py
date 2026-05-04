@@ -83,7 +83,7 @@ def get_bigram_collocations(text: str, top_n: int = 5) -> List[Tuple[str, str]]:
     bigram_counts  = Counter(zip(tokens, tokens[1:]))
     N = len(tokens)
 
-    # Keep only bigrams that appear at least twice
+    # Keep only bigrams that appear twice or more
     candidates = {bg: cnt for bg, cnt in bigram_counts.items() if cnt >= 2}
 
     def pmi(w1: str, w2: str, cnt: int) -> float:

@@ -161,19 +161,19 @@ Scores:    business=+0.0  politics=-200.5  tech=-228.7  ...
 
 ---
 
-## Report Outline (10 pages)
+## Written Outline
 
-1. **Introduction** (1 page) — Problem statement, motivation
-2. **Related Work** (0.5 page) — Brief overview of news classification approaches
-3. **Methods** (3 pages)
+1. **Introduction** — Problem statement, motivation
+2. **Related Work** — Brief overview of news classification approaches
+3. **Methods**
    - Text preprocessing pipeline
    - Genre classification (NB + TF-IDF)
    - Keyword extraction (POS, NER, collocations)
    - Sentiment analysis (VADER vs NB)
-4. **Experimental Setup** (1 page) — Datasets, evaluation metrics, CV strategy
-5. **Results** (2 pages) — Accuracy tables, confusion matrices, example outputs
-6. **Live Demo Description** (1 page) — RSS pipeline, screenshots
-7. **Discussion & Conclusion** (1.5 pages) — What worked, limitations, future work
+4. **Experimental Setup** — Datasets, evaluation metrics, CV strategy
+5. **Results** — Accuracy tables, confusion matrices, example outputs
+6. **Live Demo Description** — RSS pipeline, screenshots
+7. **Discussion & Conclusion** — What worked, limitations, future work
 
 ---
 
