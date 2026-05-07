@@ -35,14 +35,21 @@ python NewsProject.py --skip-cv  # skip cross-validation (faster)
 
 ## Dataset
 
-**BBC News** — 2,225 articles, 5 categories (business, entertainment, politics, sport, tech).  
-Included as `bbc.zip`. The extracted `bbc/` folder is gitignored.
+**BBC News** — 2,225 articles across 5 categories. Included as `bbc.zip`; the extracted `bbc/` folder is gitignored.
+
+| Category      | Articles |
+|---------------|----------|
+| business      | 510      |
+| entertainment | 386      |
+| politics      | 417      |
+| sport         | 511      |
+| tech          | 401      |
 
 **Split:** stratified 80 / 10 / 10 (train / val / test) per category.
 
 ---
 
-## What it does
+## Function
 
 1. **Genre classification** — custom Multinomial NB with Laplace smoothing (~98% test accuracy).
 2. **Keyword extraction** — TF-IDF ranking + POS-filtered keywords (nouns/adjectives) + NER.
