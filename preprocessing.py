@@ -1,18 +1,13 @@
-# preprocessing.py — Text tokenization and cleaning utilities
-#
-# Patterns from NaiveBayes.py (preprocess_tokens) and PortStemmer.py (tokenize_doc).
+# preprocessing.py — Text tokenization and cleaning
 
 import re
 from typing import Iterable, List
 
 from nltk.corpus import stopwords
 
-# Compiled regexes from NaiveBayes.py and PortStemmer.py
 _WORD_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_+.-]*$")
 _ALPHANUM = re.compile(r"[^a-zA-Z0-9]")
 
-# Module-level stop-word set — loaded once, shared by all callers.
-# Uses a frozenset for O(1) membership tests.
 STOP_WORDS: frozenset = frozenset(w.lower() for w in stopwords.words("english"))
 
 
@@ -25,8 +20,7 @@ def preprocess_tokens(
 ) -> List[str]:
     """
     Clean tokens: lowercase, filter stopwords and non-alphabetic/short tokens.
-    If binarize=True each token appears at most once (presence/absence feature).
-    Copied from NaiveBayes.py.
+    If binarize=True each type appears at most once.
     """
     out: List[str] = []
     seen: set = set()

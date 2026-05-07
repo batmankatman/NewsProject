@@ -8,7 +8,7 @@ MIN_TOKEN_LEN = 2
 BINARIZE      = False
 ALPHA         = 1.0
 REPORT        = True
-BBC_DATA_DIR  = "../bbc"
+BBC_DATA_DIR  = "bbc"
 BBC_RSS_URL   = "https://feeds.bbci.co.uk/news/rss.xml"
 SAMPLE_N      = 3          # articles shown in detail during demo
 

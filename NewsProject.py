@@ -9,15 +9,14 @@
 #   preprocessing.py — tokenization and cleaning
 #   naive_bayes.py   — Multinomial NB + K-Fold CV
 #   tfidf.py         — TF-IDF index and scoring
-#   keywords.py      — TF-IDF/POS keywords, NER, bigram collocations
-#   sentiment.py     — movie_reviews NB + VADER
+#   keywords.py      — TF-IDF/POS keywords, NER
+#   sentiment.py     — BBC-trained NB + VADER
 #   dataset.py       — BBC dataset loading and splitting
-#   pipeline.py      — article analysis, display, RSS and interactive demos
+#   pipeline.py      — article analysis, display, RSS demo
 #
 # Usage:
 #   python NewsProject.py
 #   python NewsProject.py --skip-cv       (faster, skips cross-validation)
-#   python NewsProject.py --interactive   (adds interactive text input demo)
 #
 # Requirements:
 #   pip install nltk scikit-learn feedparser
@@ -36,24 +35,23 @@ from config import (
 )
 from preprocessing import preprocess_tokens, tokenize_doc
 from naive_bayes import NaiveBayes, run_stratified_kfold_cv
-from tfidf import build_index, compute_tfidf, score_new_doc
-from keywords import get_tfidf_keywords, get_pos_keywords, extract_named_entities, get_bigram_collocations
-from sentiment import load_movie_reviews_dataset, vader_sentiment
+from tfidf import build_index, compute_tfidf
+from keywords import get_tfidf_keywords
+from sentiment import load_bbc_sentiment_dataset
 from dataset import load_bbc_raw, split_dataset
-from pipeline import analyze_article, print_article, demo_rss, demo_interactive
+from pipeline import analyze_article, print_article, demo_rss
 
 
 
 
 def main():
-    run_cv    = "--skip-cv" not in sys.argv
-    run_inter = "--interactive" in sys.argv
+    run_cv = "--skip-cv" not in sys.argv
 
     random.seed(RANDOM_STATE)
 
     # Download required NLTK data
     for resource in [
-        "stopwords", "movie_reviews", "vader_lexicon",
+        "stopwords", "vader_lexicon",
         "punkt_tab", "averaged_perceptron_tagger_eng",
         "maxent_ne_chunker_tab"
     ]:
@@ -95,17 +93,17 @@ def main():
     tfidf     = compute_tfidf(docs_ir, inv_index)
     N_corpus  = len(docs_ir)
 
-    # PART 3: Sentiment — NB on movie_reviews + VADER
-    print(f"\nLoading movie_reviews corpus...")
+    # PART 3: Sentiment — NB on BBC corpus (VADER-labeled) + VADER
+    analyzer = SentimentIntensityAnalyzer()
+    print(f"\nBuilding BBC sentiment dataset (VADER pseudo-labels)...")
     print(f"Preprocessing: stopwords=False | min_len={MIN_TOKEN_LEN} | binarized={BINARIZE}")
-    sent_docs, sent_labels, _ = load_movie_reviews_dataset()
+    sent_docs, sent_labels = load_bbc_sentiment_dataset(raw_texts, analyzer)
 
     sent_clf = NaiveBayes(alpha=ALPHA)
     if run_cv:
         run_stratified_kfold_cv(sent_clf, sent_docs, sent_labels, task_name="Sentiment")
 
     sent_model = sent_clf.train(sent_docs, sent_labels)
-    analyzer   = SentimentIntensityAnalyzer()
 
     # Show SAMPLE_N articles with keyword and sentiment output
     print(f"\n=== Sample Article Analysis (n={SAMPLE_N}) ===")
@@ -124,12 +122,6 @@ def main():
 
     # PART 4: Live RSS Demo
     demo_rss(genre_model, sent_model, analyzer, inv_index, N_corpus)
-
-    # PART 5: Interactive Demo (opt-in)
-    if run_inter:
-        demo_interactive(genre_model, sent_model, analyzer, inv_index, N_corpus)
-    else:
-        print("\nRun with --interactive to try the text input demo.")
 
 
 if __name__ == "__main__":

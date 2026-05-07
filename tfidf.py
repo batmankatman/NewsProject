@@ -1,6 +1,4 @@
 # tfidf.py — TF-IDF index and scoring
-#
-# Formula and variable names copied from PortStemmer.py (IRSystem.index / compute_tfidf).
 
 import math
 from collections import defaultdict
@@ -8,10 +6,7 @@ from typing import Dict, List, Tuple
 
 
 def build_index(docs: List[List[str]]) -> Dict[str, List[int]]:
-    """
-    Build an inverted index: word -> list of doc indices.
-    Adapted from PortStemmer.py IRSystem.index().
-    """
+    """Build an inverted index: word -> list of doc indices."""
     inv_index: Dict[str, List[int]] = defaultdict(list)
     for doc_idx, doc in enumerate(docs):
         for word in set(doc):
@@ -25,10 +20,7 @@ def compute_tfidf(
 ) -> Dict[Tuple[str, int], float]:
     """
     Compute TF-IDF for all (word, doc_idx) pairs.
-    Formula from PortStemmer.py:
-        w_td  = 1 + log10(tf)
-        idf_t = log10(N / df)
-        tfidf = w_td * idf_t
+    w_td = 1 + log10(tf),  idf = log10(N/df),  tfidf = w_td * idf
     """
     print("Calculating tf-idf...")
     tf: Dict[Tuple[str, int], int] = defaultdict(int)
@@ -50,10 +42,7 @@ def score_new_doc(
     inv_index: Dict[str, List[int]],
     N_corpus: int,
 ) -> Dict[str, float]:
-    """
-    Compute TF-IDF scores for a single new document using corpus IDF values.
-    Standard approach for scoring documents at query/inference time.
-    """
+    """TF-IDF scores for a new document using corpus IDF values."""
     tf: Dict[str, int] = defaultdict(int)
     for w in doc_tokens:
         tf[w] += 1

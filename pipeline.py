@@ -1,6 +1,5 @@
-# pipeline.py — Single-article analysis, display, RSS and interactive demos
+# pipeline.py — Single-article analysis, display, and RSS demo
 
-import sys
 from typing import Dict
 
 import feedparser
@@ -11,7 +10,7 @@ from config import BBC_RSS_URL, USE_STOPWORDS, MIN_TOKEN_LEN
 from preprocessing import preprocess_tokens, tokenize_doc
 from naive_bayes import NBModel
 from tfidf import score_new_doc
-from keywords import get_tfidf_keywords, get_pos_keywords, extract_named_entities, get_bigram_collocations
+from keywords import get_tfidf_keywords, get_pos_keywords, extract_named_entities
 from sentiment import vader_sentiment
 
 
@@ -24,11 +23,8 @@ def analyze_article(
     N_corpus:    int,
 ) -> Dict:
     """
-    Full pipeline for one article:
-      1. Genre classification (NB)
-      2. TF-IDF keywords (corpus IDF)
-      3. POS keywords + NER + bigram collocations
-      4. Sentiment — NB (movie_reviews) + VADER
+    Full pipeline for one article: genre classification, TF-IDF + POS keywords,
+    NER, and sentiment (NB + VADER).
     """
     # Genre classification
     genre_tokens     = preprocess_tokens(text.split(), use_stopwords=USE_STOPWORDS, min_len=MIN_TOKEN_LEN)
@@ -42,10 +38,9 @@ def analyze_article(
     tfidf_sc = score_new_doc(doc_ir, inv_index, N_corpus)
     tfidf_kw = get_tfidf_keywords(tfidf_sc, top_n=10)
 
-    # POS keywords, NER, collocations
+    # POS keywords, NER
     pos_kw = get_pos_keywords(text, top_n=10)
     ner    = extract_named_entities(text)
-    colls  = get_bigram_collocations(text, top_n=5)
 
     # Sentiment
     sent_tokens     = preprocess_tokens(text.split(), use_stopwords=False)
@@ -58,7 +53,6 @@ def analyze_article(
         "tfidf_kw":    tfidf_kw,
         "pos_kw":      pos_kw,
         "ner":         ner,
-        "colls":       colls,
         "nb_sent":     nb_label,
         "vader_label": v_label,
         "vader_score": v_score,
@@ -78,8 +72,6 @@ def print_article(idx, text: str, result: Dict, true_label: str = ""):
     print(f"POS kw:    {', '.join(w for w, _, _ in result['pos_kw'][:8]) or '(none)'}")
     ner_parts = [f"{k}: {', '.join(v[:2])}" for k, v in result["ner"].items()]
     print(f"Entities:  {' | '.join(ner_parts) or '(none)'}")
-    coll_strs = [f"{w1} {w2}" for w1, w2 in result["colls"]]
-    print(f"Bigrams:   {', '.join(coll_strs) or '(none)'}")
     agree_str = "[agree]" if result["agree"] else "[disagree]"
     print(f"Sentiment: NB={result['nb_sent']}  VADER={result['vader_label']}  "
           f"compound={result['vader_score']:+.4f}  {agree_str}")
@@ -116,36 +108,3 @@ def demo_rss(
     for i, text in enumerate(articles, start=1):
         result = analyze_article(text, genre_model, sent_model, analyzer, inv_index, N_corpus)
         print_article(i, text, result)
-
-
-def demo_interactive(
-    genre_model: NBModel,
-    sent_model:  NBModel,
-    analyzer:    SentimentIntensityAnalyzer,
-    inv_index:   Dict,
-    N_corpus:    int,
-):
-    """
-    Interactive demo — reads text from stdin, blank line triggers analysis.
-    Mirrors Regex.py's line-by-line stdin iteration pattern.
-    """
-    print("\n=== Interactive Demo ===")
-    print("Paste article text (blank line to analyze, 'quit' to exit):\n")
-    article_num = 1
-    while True:
-        lines = []
-        for line in sys.stdin:
-            line = line.rstrip("\n")
-            if line.strip().lower() == "quit":
-                print("Exiting.")
-                return
-            if line == "" and lines:
-                break
-            lines.append(line)
-        text = "\n".join(lines).strip()
-        if not text:
-            continue
-        result = analyze_article(text, genre_model, sent_model, analyzer, inv_index, N_corpus)
-        print_article(article_num, text, result)
-        article_num += 1
-        print("\nNext article (or 'quit'):\n")

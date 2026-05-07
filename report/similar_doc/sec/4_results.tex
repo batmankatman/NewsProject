@@ -1,0 +1,30 @@
+\section{Results}
+\label{sec:results}
+
+Our model demonstrates strong performance in real-time detection scenarios, achieving a consistent frame rate of approximately 30 FPS on standard hardware, which is sufficient for live event monitoring. In live webcam tests, the system successfully identifies UNCC logos and correctly associates them with torsos and headgear. The "UNCC MERCH COUNT" feature updates dynamically as subjects enter and leave the frame, providing an immediate metric of school spirit.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} \\
+\midrule
+All & 0.854 & 0.664 & 0.753 \\
+UNCC HEADGEAR & 0.895 & 0.500 & 0.622 \\
+UNCC TORSO & 0.897 & 0.850 & 0.932 \\
+UNCC-LOGO & 0.769 & 0.642 & 0.705 \\
+\bottomrule
+\end{tabular}
+\caption{Quantitative performance metrics of the CMM model on the validation set.}
+\label{tab:results}
+\end{table}
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.9\linewidth]{merch_count2.png}
+	\caption{Live detection output showing the UNCC merch count in a sample frame with the count listed in the top-right corner.}
+	\label{fig:merch_count2}
+\end{figure}
+
+Quantitatively, the model shows high confidence, often exceeding 0.85, for frontal views of the logos. The distinction between "UNCC Merchandise" and deceptive brand clothing is generally maintained, thanks to the inclusion of hard negatives in the training set. However, we note that the model's performance may degrade under heavy angles and occlusion, a known limitation of single-shot detectors. Despite these challenges, the system achieves a detection accuracy that supports its primary use case as a "School Spirit Meter," effectively filtering non-affiliated apparel (to a specified threshold) while capturing authentic merchandise.
+

@@ -1,38 +1,47 @@
-# sentiment.py — Sentiment analysis: NB on movie_reviews + VADER
-#
-# Mirrors the pattern in NaiveBayes.py (load_movie_reviews_dataset).
+# sentiment.py — Sentiment analysis: NB on BBC corpus (VADER pseudo-labels) + VADER
 
 from typing import List, Tuple
 
-from nltk.corpus import movie_reviews
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 from preprocessing import preprocess_tokens
 from config import MIN_TOKEN_LEN, BINARIZE
 
 
-def load_movie_reviews_dataset(
+def load_bbc_sentiment_dataset(
+    raw_texts: List[str],
+    analyzer: SentimentIntensityAnalyzer,
     use_stopwords: bool = False,
     min_len: int = MIN_TOKEN_LEN,
     binarize: bool = BINARIZE,
-) -> Tuple[List[List[str]], List[str], List[str]]:
+) -> Tuple[List[List[str]], List[str]]:
     """
-    Load NLTK movie_reviews and return preprocessed tokens, labels, and file IDs.
-    Copied from NaiveBayes.py.
+    Pseudo-label BBC articles with VADER compound scores, then return
+    preprocessed bag-of-words for NB sentiment training.
+
+    Labels: 'pos' (compound >= 0.05), 'neg' (compound <= -0.05).
+    Neutral articles are excluded — they carry too little discriminative signal.
     """
-    fileids = movie_reviews.fileids()
-    labels  = [movie_reviews.categories(fid)[0] for fid in fileids]
-    docs_tokens: List[List[str]] = [
-        preprocess_tokens(
-            movie_reviews.words(fid),
+    docs_tokens: List[List[str]] = []
+    labels: List[str] = []
+    for text in raw_texts:
+        compound = analyzer.polarity_scores(text)["compound"]
+        if compound >= 0.05:
+            label = "pos"
+        elif compound <= -0.05:
+            label = "neg"
+        else:
+            continue  # skip neutral articles
+        tokens = preprocess_tokens(
+            text.split(),
             use_stopwords=use_stopwords,
             min_len=min_len,
-            lower=True,
             binarize=binarize,
         )
-        for fid in fileids
-    ]
-    return docs_tokens, labels, list(fileids)
+        if tokens:
+            docs_tokens.append(tokens)
+            labels.append(label)
+    return docs_tokens, labels
 
 
 def vader_sentiment(text: str, analyzer: SentimentIntensityAnalyzer) -> Tuple[str, float]:

@@ -1,6 +1,4 @@
 # naive_bayes.py — Multinomial Naive Bayes with Laplace smoothing
-#
-# Copied from NaiveBayes.py (NBModel, NaiveBayes, run_stratified_kfold_cv).
 
 import math
 from collections import defaultdict
@@ -88,7 +86,7 @@ def run_stratified_kfold_cv(
     random_state: int = RANDOM_STATE,
     print_report: bool = REPORT,
 ):
-    """Stratified K-Fold CV. Copied from NaiveBayes.py."""
+    """Stratified K-Fold cross-validation."""
     skf     = StratifiedKFold(n_splits=n_splits, shuffle=shuffle, random_state=random_state)
     indices = list(range(len(labels)))
     accs: List[float] = []

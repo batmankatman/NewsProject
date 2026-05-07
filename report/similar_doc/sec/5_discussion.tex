@@ -1,0 +1,10 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Evaluation and Setbacks}
+Our quantitative results highlight both the strengths and limitations of the model. The system achieved an overall mAP@50 of 0.753, with the `UNCC TORSO` class performing exceptionally well (mAP@50 0.932). However, the `UNCC HEADGEAR` class showed lower performance (mAP@50 0.622), likely due to the smaller size of hats and caps relative to the frame, making them harder to detect at a distance. This aligns with our observation that small logos on distant subjects proved challenging.
+
+While the CMM performs well in controlled environments, several challenges were encountered. One significant setback was the collection of "hard negative" data. Finding clothing that closely resembles UNCC merchandise without actually being affiliated was difficult but necessary to prevent false positives. Additionally, lighting conditions in different environments (e.g., dim indoor lighting vs. bright outdoor sunlight) affected detection consistency.
+
+\subsection{Strengths}
+The primary strength of our approach is its real-time capability combined with high precision (0.854). This high precision ensures that the "School Spirit Meter" rarely counts non-affiliated clothing, maintaining user trust even if some authentic items are missed (Recall 0.664). The YOLOv11 architecture allows for low-latency inference, making the system interactive and engaging. Furthermore, the logic-based association of logos to torsos/headgear proved to be a robust method for counting "wearers" rather than just "logos," adding a layer of semantic understanding to the raw detections.
