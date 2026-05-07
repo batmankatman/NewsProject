@@ -20,7 +20,7 @@ pip install nltk scikit-learn feedparser
 unzip bbc.zip
 ```
 
-NLTK resources are downloaded automatically on first run.
+NLTK resources are downloaded automatically on first run (`stopwords`, `vader_lexicon`, `words`, `punkt_tab`, `averaged_perceptron_tagger_eng`, `maxent_ne_chunker_tab`).
 
 ---
 

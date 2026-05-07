@@ -1,0 +1,38 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Which Genres Are Easiest and Hardest?}
+
+Looking at the confusion matrix (Table~\ref{tab:confusion}), sport and politics achieve perfect recall (1.0000), meaning every sport and politics article in the test set was correctly identified. This is intuitive: sport articles have a very distinctive vocabulary — the names of specific athletes, teams, scores, and sport-specific terminology (e.g., \textit{innings}, \textit{championship}, \textit{goalscorer}) rarely appear in other categories. Politics similarly revolves around a narrow lexicon of government institutions, party names, and legislative concepts.
+
+Business and tech are the hardest pair. Two business articles were misclassified: one as politics (likely a story about economic policy or government spending) and one as tech (probably a story about a technology company's earnings). This reflects genuine topical overlap — a story about, say, Google's stock performance or a government stimulus package spans multiple editorial categories by nature. Entertainment had one misclassification as politics, possibly a story about a celebrity's political activities.
+
+Overall, these errors suggest that the biggest limitation of the bag-of-words approach is its insensitivity to context: a word like \textit{revenue} appears in both business and tech articles, and without syntactic or semantic context the model cannot distinguish them.
+
+\subsection{Sentiment Limitations in the News Domain}
+
+News articles present a fundamentally different challenge for sentiment analysis compared to the domains (product reviews, movie reviews, social media) on which most sentiment tools are developed. News writing is deliberately neutral: journalists are trained to present facts without editorializing, which means the majority of BBC articles land close to sentiment-neutral regardless of their topic.
+
+This creates two practical problems. First, VADER's compound scores for many articles cluster around zero, producing many \textit{neutral} labels that we discard during training — reducing the size of the sentiment training set and potentially biasing the NB model toward the articles that are most polarized. Second, when NB and VADER disagree, it is often because the article contains factual language that VADER's lexicon parses as positive (e.g., words like \textit{profit}, \textit{growth}, \textit{rise}) while the NB model, trained on BBC text, has learned that these words appear across both positive and negative business stories.
+
+% -----------------------------------------------------------------------
+% TODO: A scatter plot or histogram of VADER compound scores for all
+%   2,225 BBC articles would clearly illustrate this near-neutral
+%   distribution and motivate the difficulty of the sentiment task.
+% -----------------------------------------------------------------------
+
+\subsection{Sarcasm, Ambiguity, and Bias}
+
+Both the NB model and VADER fail in systematic ways that are worth acknowledging:
+
+\paragraph{Sarcasm and irony.} Neither model has any representation of sarcasm. A headline like ``Government's brilliant plan to fix economy'' would be scored positively by VADER despite potentially being ironic. Detecting sarcasm typically requires pragmatic context well beyond what bag-of-words or lexicon-based methods can capture.
+
+\paragraph{Negation scope.} VADER applies simple heuristics for negation (e.g., flipping polarity when preceded by ``not''), but complex negation (\textit{``not entirely unsuccessful''}) is frequently mishandled. The NB model ignores negation entirely, since tokens are treated as independent features.
+
+\paragraph{Domain bias in pseudo-labels.} Because the NB sentiment model's training labels come from VADER, any systematic errors in VADER's lexicon are inherited by the NB model. If VADER tends to score financial vocabulary as positive (due to words like \textit{gain}, \textit{boost}, \textit{profit}), the NB model will learn that business vocabulary is positive — even when the article is reporting a corporate scandal.
+
+\paragraph{Representation bias.} The BBC corpus reflects the editorial stance and topic selection of a single British public broadcaster. The sentiment model trained on this corpus cannot be assumed to generalize to news from other outlets, countries, or political leanings.
+
+\subsection{NER Quality}
+
+The named-entity extractor performs reasonably well on proper nouns but has two recurring weaknesses. First, it occasionally misclassifies common nouns or short words as geopolitical entities (the ``Ad'' GPE example in Table~\ref{tab:samples}). Second, multi-token entity boundaries are sometimes incorrect — for instance, splitting ``Alan Greenspan'' into two separate entities or merging adjacent entities. These are known limitations of the NLTK rule-based chunker, which uses context-free patterns rather than a sequence model trained on large annotated corpora.

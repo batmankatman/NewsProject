@@ -1,0 +1,19 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented NewsScope, a multi-task NLP pipeline for automatic BBC news article analysis. The system demonstrates that a custom Multinomial Naive Bayes classifier, trained on bag-of-words features with Laplace smoothing, achieves near-ceiling accuracy (98.24\%) on the BBC genre classification task. The pipeline additionally extracts meaningful keywords via TF-IDF and POS filtering, identifies named entities using NLTK's chunker, and produces sentiment predictions using both a rule-based analyzer (VADER) and an in-domain Naive Bayes model trained on BBC pseudo-labels.
+
+\paragraph{What worked.}
+Genre classification is the clear success of this project. The results confirm that BBC news categories have distinct enough vocabularies that a simple bag-of-words model generalizes almost perfectly to unseen articles. The combination of TF-IDF keywords and POS-tag filtering produced readable and relevant keyword lists, and the named entity extractor successfully identified the key people, organizations, and places discussed in most articles. Keeping the sentiment NB model in-domain (trained on BBC text rather than movie reviews) was the right design choice: the vocabulary overlap with the genre classifier ensures that the model is not penalized for news-specific phrasing.
+
+\paragraph{What could be improved.}
+
+\begin{itemize}
+    \item \textbf{Sentiment quality.} The biggest limitation is sentiment analysis. News text is overwhelmingly neutral, and pseudo-labels derived from VADER are noisy. A small amount of human-annotated sentiment data — even a few hundred articles — would likely improve performance substantially.
+
+    \item \textbf{Feature enrichment.} Beyond unigrams, bigram features would capture phrases like \textit{interest rate} or \textit{match result} that carry topical meaning lost in the bag-of-words representation.
+
+    \item \textbf{NER accuracy.} Replacing the rule-based NLTK chunker with a modern sequence-labeling model would significantly reduce the boundary errors and false-positive entity detections observed in our outputs.
+\end{itemize}
+
+Overall, this project demonstrates that classical NLP methods — properly implemented and applied to a well-matched dataset — can achieve strong results on genre classification while also providing interpretable outputs (keywords, entities, sentiment) that would be difficult to extract from a black-box neural model. The pipeline is compact, self-contained, and fully reproducible from the included \texttt{bbc.zip} dataset.

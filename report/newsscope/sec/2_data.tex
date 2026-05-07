@@ -1,0 +1,39 @@
+\section{Data}
+\label{sec:data}
+
+\subsection{BBC News Corpus}
+We use the BBC News dataset introduced by \citet{greene2006practical}, a widely-used benchmark for topic classification. The corpus contains 2,225 news articles collected from the BBC website between 2004 and 2005, spanning five editorial categories: \textit{business}, \textit{entertainment}, \textit{politics}, \textit{sport}, and \textit{tech}. The category distribution is shown in Table~\ref{tab:dataset}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Category} & \textbf{Articles} & \textbf{Share (\%)} \\
+\midrule
+Business      & 510 & 22.9 \\
+Sport         & 511 & 23.0 \\
+Tech          & 401 & 18.0 \\
+Politics      & 417 & 18.7 \\
+Entertainment & 386 & 17.3 \\
+\midrule
+\textbf{Total} & \textbf{2,225} & \textbf{100.0} \\
+\bottomrule
+\end{tabular}
+\caption{BBC News dataset category distribution. Business and sport are the largest categories; entertainment is the smallest.}
+\label{tab:dataset}
+\end{table}
+
+The articles are relatively short (median length approximately 300 words), topically diverse within each category, and written in a formal news register. Because BBC articles are carefully edited, the corpus has relatively few typos or non-standard forms, which simplifies preprocessing. The dataset is included with the project as \texttt{bbc.zip} and is loaded from the extracted \texttt{bbc/} directory.
+
+% -----------------------------------------------------------------------
+% TODO: Optional figure — bar chart of article counts per category,
+%   possibly with average article length overlaid on a secondary axis.
+% -----------------------------------------------------------------------
+
+\subsection{Train / Validation / Test Split}
+
+We apply a stratified split to preserve the class distribution in every partition. The dataset is divided into 80\% training, 10\% validation, and 10\% test, yielding approximately 1,777 training, 221 validation, and 227 test articles. Stratification ensures that even the smaller categories (entertainment, tech) are adequately represented in every partition. The random seed is fixed at 42 for reproducibility.
+
+\subsection{Sentiment Labels}
+
+No gold-standard sentiment labels exist for the BBC corpus. Instead, we generate pseudo-labels using VADER \cite{hutto2014vader}: articles with a compound score $\geq 0.05$ are labeled \textit{positive}, those $\leq -0.05$ are labeled \textit{negative}, and strictly neutral articles are discarded. This produces a binary sentiment dataset drawn entirely from BBC text, keeping the vocabulary of the sentiment model consistent with the genre classifier's training domain.

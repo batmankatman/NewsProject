@@ -51,7 +51,7 @@ def main():
 
     # Download required NLTK data
     for resource in [
-        "stopwords", "vader_lexicon",
+        "stopwords", "vader_lexicon", "words",
         "punkt_tab", "averaged_perceptron_tagger_eng",
         "maxent_ne_chunker_tab"
     ]:

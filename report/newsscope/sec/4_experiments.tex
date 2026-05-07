@@ -1,0 +1,128 @@
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Genre Classification}
+
+\paragraph{Cross-validation.}
+We evaluate both classifiers using stratified 5-fold cross-validation on the full corpus before committing to a final model. Each fold preserves the original class distribution. Table~\ref{tab:cv} summarizes the per-fold accuracy for both the genre and sentiment classifiers.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Fold} & \textbf{Genre Acc.} & \textbf{Sentiment Acc.} \\
+\midrule
+Fold 1 & 0.9685 & 0.7760 \\
+Fold 2 & 0.9820 & 0.8009 \\
+Fold 3 & 0.9730 & 0.7964 \\
+Fold 4 & 0.9730 & 0.8118 \\
+Fold 5 & 0.9775 & 0.7959 \\
+\midrule
+\textbf{Mean} & \textbf{0.9748} & \textbf{0.7962} \\
+\bottomrule
+\end{tabular}
+\caption{Stratified 5-fold cross-validation accuracy for both classifiers. Sentiment CV uses BBC articles pseudo-labeled by VADER.}
+\label{tab:cv}
+\end{table}
+
+\paragraph{Test set results.}
+The final model is trained on the full training partition (80\%, $\approx$1,777 articles) and evaluated on the held-out test set (10\%, 227 articles). It achieves \textbf{98.24\% accuracy}. Per-class precision, recall, and F1 are shown in Table~\ref{tab:classification_report}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Category} & \textbf{Prec.} & \textbf{Recall} & \textbf{F1} & \textbf{Support} \\
+\midrule
+Business      & 1.0000 & 0.9608 & 0.9800 & 51 \\
+Entertainment & 1.0000 & 0.9750 & 0.9873 & 40 \\
+Politics      & 0.9556 & 1.0000 & 0.9773 & 43 \\
+Sport         & 0.9811 & 1.0000 & 0.9905 & 52 \\
+Tech          & 0.9756 & 0.9756 & 0.9756 & 41 \\
+\midrule
+\textbf{Weighted avg} & \textbf{0.9829} & \textbf{0.9824} & \textbf{0.9824} & \textbf{227} \\
+\bottomrule
+\end{tabular}
+\caption{Per-class classification report on the 227-article test set.}
+\label{tab:classification_report}
+\end{table}
+
+\paragraph{Confusion matrix.}
+The confusion matrix (Table~\ref{tab:confusion}) reveals that the vast majority of errors are between adjacent topic areas — a business article misclassified as politics, or a sport article misclassified as tech. There are no gross misclassifications (e.g., sport predicted as entertainment).
+
+\begin{table}[h]
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{True \textbackslash{} Pred} & \textbf{Bus.} & \textbf{Ent.} & \textbf{Pol.} & \textbf{Spt.} & \textbf{Tch.} \\
+\midrule
+Business      & \textbf{49} & 0 & 1 & 0 & 1 \\
+Entertainment & 0 & \textbf{39} & 1 & 0 & 0 \\
+Politics      & 0 & 0 & \textbf{43} & 0 & 0 \\
+Sport         & 0 & 0 & 0 & \textbf{52} & 0 \\
+Tech          & 0 & 0 & 0 & 1 & \textbf{40} \\
+\bottomrule
+\end{tabular}
+\caption{Confusion matrix on the test set. Rows = true labels, columns = predicted. Diagonal entries (bold) are correct predictions.}
+\label{tab:confusion}
+\end{table}
+
+% -----------------------------------------------------------------------
+% TODO: A heatmap version of this confusion matrix (e.g., generated
+%   with matplotlib/seaborn and exported as a PDF or PNG) would be
+%   much easier to read than a plain table. Include it as a figure.
+% -----------------------------------------------------------------------
+
+\subsection{Keyword and Entity Extraction}
+
+We present three sample articles from the corpus to illustrate the keyword and NER pipeline. Each article's top-8 TF-IDF keywords, top-8 POS-filtered keywords, and named entities are shown in Table~\ref{tab:samples}.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{p{2.4cm}p{4.8cm}p{4.8cm}p{3.2cm}}
+\toprule
+\textbf{Article} & \textbf{TF-IDF Keywords} & \textbf{POS Keywords} & \textbf{Named Entities} \\
+\midrule
+\textit{Time Warner profits} (business)
+  & timewarner, yearearlier, aols, aol, restate, fullyear, 639m, 111bn
+  & timewarner, aol, profits, sales, warner, internet, profit, time
+  & GPE: Ad, Google; PERSON: Time Warner, Warner; ORG: TimeWarner \\
+\addlinespace
+\textit{Dollar/Greenspan} (business)
+  & greenspan, 12871, 12974, greenspans, sinche, loosening, halfpoint, deficit
+  & dollar, deficit, months, greenspan, federal, reserve, current
+  & PERSON: Alan Greenspan; ORG: Federal Reserve; FACILITY: White House \\
+\addlinespace
+\textit{Yukos/Rosneft} (business)
+  & yugansk, rosneft, menatep, yukos, 479m, 540m, rosnefts, moscowbased
+  & rosneft, yukos, sale, unit, loan, menatep, assets
+  & GPE: Russian; ORG: Yukos, Menatep Group \\
+\bottomrule
+\end{tabular}
+\caption{Sample keyword and entity extraction output for three business articles from the corpus.}
+\label{tab:samples}
+\end{table*}
+
+Several observations stand out. TF-IDF keywords tend to capture proper nouns and rare compound forms (e.g., \textit{yearearlier}, \textit{moscowbased}) that are unique to the article, while POS-filtered keywords tend to be more general and readable. The NER output correctly identifies organizations and people but occasionally misclassifies common nouns as geopolitical entities (e.g., ``Ad'' as a GPE), a known limitation of NLTK's rule-based chunker.
+
+\subsection{Sentiment Analysis}
+
+Table~\ref{tab:sentiment} shows the sentiment predictions for the same three articles from both the NB model and VADER.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Article} & \textbf{NB} & \textbf{VADER} & \textbf{Compound} \\
+\midrule
+Time Warner profits & pos & pos & $+$0.9954 \\
+Dollar/Greenspan    & neg & pos & $+$0.9421 \\
+Yukos/Rosneft       & neg & neg & $-$0.8860 \\
+\bottomrule
+\end{tabular}
+\caption{NB and VADER sentiment predictions with VADER compound scores for three sample articles. The second article shows a NB/VADER disagreement.}
+\label{tab:sentiment}
+\end{table}
+
+Agreement between the two systems is mixed. On the three samples, two agree and one disagrees — a pattern we observe broadly across the corpus. We examine the causes of disagreement in Section~\ref{sec:discussion}.

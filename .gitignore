@@ -16,4 +16,6 @@ bbc/
 venv/
 env/
 PROJECT_OUTLINE.md
-report/
+
+# Report — include newsscope/, exclude the reference template
+report/similar_doc/
