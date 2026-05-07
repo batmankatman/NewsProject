@@ -11,8 +11,9 @@ bbc/
 # macOS
 .DS_Store
 
-# Virtual environments
+# Other
 .venv/
 venv/
 env/
 PROJECT_OUTLINE.md
+report/report/
