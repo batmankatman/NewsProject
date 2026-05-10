@@ -1,0 +1,6 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+NewsScope shows that classical NLP methods are enough to solve BBC genre classification very well: a bag-of-words Multinomial Naive Bayes model reaches 98.24\% accuracy, and the TF-IDF/POS keyword pipeline produces readable summaries of each article. The sentiment component is less stable because BBC news is often neutral and the pseudo-labels inherit VADER's weaknesses, so its outputs should be treated as approximate rather than definitive. The named-entity extractor is also useful, but it still makes occasional tagging errors.
+
+The main improvements would be better sentiment annotations, richer features such as bigrams, and a stronger entity model. Even with those limitations, the project remains compact, reproducible, and useful as a demonstration of how far classical NLP can go on a well-matched news corpus.

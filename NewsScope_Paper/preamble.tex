@@ -1,0 +1,34 @@
+%% preamble.tex — additional packages for NewsScope report
+
+%%
+%% Inline annotations (red TODO markers, disable for final version)
+%%
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\todo}[1]{{\color{red}#1}}
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+%% Disable for final submission:
+% \renewcommand{\TODO}[1]{}
+% \renewcommand{\todo}[1]{#1}
+
+%%
+%% Professional table rules (toprule / midrule / bottomrule)
+%%
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{placeins}
+
+%%
+%% Multi-panel figures
+%%
+\usepackage{subcaption}
+
+%%
+%% Better math support
+%%
+\usepackage{amsmath}
+
+%%
+%% Paragraph spacing tweak (optional — enable near final version)
+%%
+% \renewcommand{\paragraph}[1]{\vspace{.5em}\noindent\textbf{#1.}}

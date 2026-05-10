@@ -1,0 +1,23 @@
+\section{Introduction}
+\label{sec:intro}
+
+The volume of news produced online every day is staggering. Readers, researchers, and media organizations alike need ways to quickly understand what a given article is about, as well as if the article's tone is overall positive or negative. Doing this manually at scale is simply not feasible, which makes automated news analysis a practically important problem and a rich domain for applying NLP techniques.
+
+Genre classification, where a topic category such as \textit{sport} or \textit{technology} is assigned to an article, is the most fundamental of these tasks. Beyond this, two additional layers of information are particularly useful: (1) the specific terms and entities that distinguish an article from the background corpus, and (2) the overall sentiment of the coverage, which can reveal editorial tone or public mood around a topic.
+
+This project builds an end-to-end pipeline, which we call \textbf{NewsScope}, that addresses all three tasks within a shared workflow:
+
+\begin{enumerate}
+    \item \textbf{Genre classification:} A Multinomial Naive Bayes classifier assigns each article to one of five BBC categories.
+    \item \textbf{Keyword and entity extraction:} TF-IDF scoring, POS-tag filtering, and named-entity recognition surface the most important terms and real-world entities in each article.
+    \item \textbf{Sentiment analysis:} A Naive Bayes sentiment model trained on in-domain BBC data (pseudo-labeled by VADER) is compared against VADER's rule-based scores directly.
+\end{enumerate}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{pipeline_architecture}
+\caption{NewsScope pipeline overview. BBC articles and live RSS feed share one preprocessing stage before branching into genre classification, keyword/entity extraction, and sentiment analysis.}
+\label{fig:pipeline}
+\end{figure*}
+
+The entire pipeline is implemented using NLTK \cite{bird2009natural} and scikit-learn, and demonstrated on live BBC RSS headlines.
