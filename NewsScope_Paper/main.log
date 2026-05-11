@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.11.14)  11 MAY 2026 01:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.11.14)  11 MAY 2026 08:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -200,7 +200,26 @@ Package caption Info: New subtype `subtable' on input line 238.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 CVPR 8.5 x 11-Inch Proceedings Style `cvpr.sty'.
-) (./preamble.tex (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
+) (./preamble.tex (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+ (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen174
+\ar@mcellbox=\box56
+\extrarowheight=\dimen175
+\NC@list=\toks25
+\extratabsurround=\skip56
+\backup@length=\skip57
+\ar@cellbox=\box57
+)
+\TX@col@width=\dimen176
+\TX@old@table=\dimen177
+\TX@old@col=\dimen178
+\TX@target=\dimen179
+\TX@delta=\dimen180
+\TX@cols=\count293
+\TX@ftn=\toks26
+) (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
 )) (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
@@ -233,13 +252,13 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count293
+\c@section@level=\count294
 ) (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\@linkdim=\dimen174
-\Hy@linkcounter=\count294
-\Hy@pagecounter=\count295
+\@linkdim=\dimen181
+\Hy@linkcounter=\count295
+\Hy@pagecounter=\count296
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -247,7 +266,7 @@ Now handling font encoding PD1 ...
 ) (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count296
+\Hy@SavedSpaceFactor=\count297
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -276,15 +295,15 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 ))
-\c@Hy@tempcnt=\count297
+\c@Hy@tempcnt=\count298
 LaTeX Info: Redefining \url on input line 4763.
-\XeTeXLinkMargin=\dimen175
+\XeTeXLinkMargin=\dimen182
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 )
-\Fld@menulength=\count298
-\Field@Width=\dimen176
-\Fld@charsize=\dimen177
+\Fld@menulength=\count299
+\Field@Width=\dimen183
+\Fld@charsize=\dimen184
 Package hyperref Info: Hyper figures OFF on input line 6042.
 Package hyperref Info: Link nesting OFF on input line 6047.
 Package hyperref Info: Hyper index ON on input line 6050.
@@ -296,24 +315,24 @@ Package hyperref Info: PDF/A mode OFF on input line 6072.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count299
-\c@Item=\count300
-\c@Hfootnote=\count301
+\Hy@abspage=\count300
+\c@Item=\count301
+\c@Hfootnote=\count302
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
-\Fld@listcount=\count302
-\c@bookmark@seq@number=\count303
-\Hy@SectionHShift=\skip56
+\Fld@listcount=\count303
+\c@bookmark@seq@number=\count304
+\Hy@SectionHShift=\skip58
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 31.
  (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/Users/kamonwhiteside/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count304
-\l__pdf_internal_box=\box56
+\l__color_backend_stack_int=\count305
+\l__pdf_internal_box=\box58
 ) (./main.aux)
 \openout1 = `main.aux'.
 
@@ -393,26 +412,20 @@ Package pdftex.def Info: figures/pipeline_architecture.pdf  used on input line 1
 
 ) (./sec/4_experiments.tex
 
-[3]) (./sec/5_discussion.tex) (./sec/6_conclusion.tex
+[3]) (./sec/5_discussion.tex) (./sec/6_conclusion.tex)
 
-) (./main.bbl (./main.brf)
+(./main.bbl (./main.brf)
 \tf@brf=\write4
 \openout4 = `main.brf'.
 
+)
 
-
-[4])
-
-Package caption Warning: Unused \captionsetup[sub] on input line 25.
+Package caption Warning: Unused \captionsetup[sub] on input line 26.
 See the caption package documentation for explanation.
 
 
 
-
-
-[5
-
-] (./main.aux)
+[4] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-12-25>
@@ -423,18 +436,18 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 (rerunfilecheck)             Checksum: 2521350EA33102DE92FDBF9A0FE734B9;557.
  ) 
 Here is how much of TeX's memory you used:
- 12546 strings out of 475135
- 199570 string characters out of 5763251
- 609207 words of memory out of 5000000
- 35285 multiletter control sequences out of 15000+600000
+ 12673 strings out of 475135
+ 201565 string characters out of 5763251
+ 612908 words of memory out of 5000000
+ 35408 multiletter control sequences out of 15000+600000
  591184 words of font info for 105 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 90i,13n,94p,1157b,611s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (5 pages, 656735 bytes).
+ 90i,13n,94p,1157b,447s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/kamonwhiteside/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (4 pages, 688641 bytes).
 PDF statistics:
- 211 PDF objects out of 1000 (max. 8388607)
- 179 compressed objects within 2 object streams
- 46 named destinations out of 1000 (max. 500000)
+ 216 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
  142 words of extra memory for PDF output out of 10000 (max. 10000000)
 

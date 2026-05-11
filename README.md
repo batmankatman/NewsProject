@@ -4,6 +4,8 @@ Classifies BBC news articles by genre, extracts keywords and named entities, and
 
 **Techniques:** Multinomial Naive Bayes, TF-IDF, POS tagging, NER, VADER sentiment, K-Fold CV.
 
+_*NewsScope_Paper.pdf* contains the PDF '**main.pdf**' report of this project._
+
 ---
 
 ## Setup

@@ -32,37 +32,29 @@ The per-class report already shows the remaining errors are small and localized 
 
 \subsection{Keyword and Entity Extraction}
 
-We present three sample articles from the corpus to illustrate the keyword and NER pipeline. For compactness, each article's top-8 TF-IDF keywords and top-8 POS-filtered keywords share one cell, with named entities shown alongside in Table~\ref{tab:samples}.
+We present two representative business articles from the corpus to illustrate the keyword and NER pipeline. ``POS-filtered'' means the keyword extractor keeps only nouns and adjectives, which makes the output more readable.
+
+The raw article text uses both the concatenated company name \textit{TimeWarner} and the spaced form \textit{Time Warner}; our tokenizer preserves the concatenated form as the token \textit{timewarner}, while NER still recovers the multiword organization name.
 
 \begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{2.8cm}p{7.7cm}p{5.3cm}@{}}
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Article} & \textbf{Keywords} & \textbf{NER} \\
+\textbf{Article} & \textbf{TF-IDF} & \textbf{POS-filtered} & \textbf{NER} \\
 \midrule
-\textit{Time Warner profits}
-  & \textbf{TF-IDF:} timewarner, yearearlier, aols, aol, restate, fullyear, 639m, 111bn\\
-    \textbf{POS:} timewarner, aol, profits, sales, warner, internet, profit, time
-  & GPE: Ad, Google; PERSON: Time Warner, Warner; ORG: TimeWarner \\
-\addlinespace
-\textit{Dollar/Greenspan}
-  & \textbf{TF-IDF:} greenspan, 12871, 12974, greenspans, sinche, loosening, halfpoint, deficit\\
-    \textbf{POS:} dollar, deficit, months, greenspan, federal, reserve, current
-  & PERSON: Alan Greenspan; ORG: Federal Reserve; FACILITY: White House \\
-\addlinespace
-\textit{Yukos/Rosneft}
-  & \textbf{TF-IDF:} yugansk, rosneft, menatep, yukos, 479m, 540m, rosnefts, moscowbased\\
-    \textbf{POS:} rosneft, yukos, yugansk, sale, unit, loan, menatep, assets
-  & GPE: Russian; ORG: Yukos, Menatep Group \\
+\textit{Time Warner profits} & timewarner, yearearlier, aols, aol, restate, fullyear, 639m, 111bn & timewarner, aol, profits, sales, warner, internet, profit, time & GPE: Ad, Google; PERSON: Time Warner, Warner; ORG: TimeWarner \\
 \bottomrule
-\end{tabular}
-\caption{Sample keyword and entity extraction output for three business articles from the corpus.}
+\addlinespace
+\textit{Dollar/Greenspan} & greenspan, 12871, 12974, greenspans, sinche, loosening, halfpoint, deficit & dollar, deficit, months, greenspan, federal, reserve, current & PERSON: Alan Greenspan; ORG: Federal Reserve; FACILITY: White House \\
+\bottomrule
+\end{tabularx}
+\caption{Sample keyword and entity extraction output for two business articles from the corpus.}
 \label{tab:samples}
 \end{table*}
 
-Several observations stand out. TF-IDF keywords tend to capture proper nouns and rare compound forms (e.g., \textit{yearearlier}, \textit{moscowbased}) that are unique to the article, while POS-filtered keywords tend to be more general and readable. The NER output correctly identifies organizations and people but occasionally misclassifies common nouns as geopolitical entities (e.g., ``Ad'' as a GPE), a known limitation of NLTK's rule-based chunker.
+Several observations stand out. TF-IDF keywords tend to capture proper nouns and rare compound forms that are unique to the article, while part-of-speech filtered keywords tend to be more general and readable. The NER output correctly identifies organizations and people but occasionally misclassifies common nouns as geopolitical entities (e.g., ``Ad'' as a GPE), a known limitation of NLTK's rule-based chunker.
 
 \FloatBarrier
 
@@ -81,10 +73,10 @@ Dollar/Greenspan    & neg & pos & $+$0.9421 \\
 Yukos/Rosneft       & neg & neg & $-$0.8860 \\
 \bottomrule
 \end{tabular}
-\caption{NB and VADER sentiment predictions with VADER compound scores for three sample articles. The second article shows a NB/VADER disagreement.}
+\caption{NB and VADER sentiment predictions with VADER compound scores for three sample articles. The compound score is VADER's normalized polarity score in $[-1, +1]$; the second article shows a NB/VADER disagreement.}
 \label{tab:sentiment}
 \end{table}
 
-Agreement between the two systems is mixed. On the three samples, two agree and one disagrees — a pattern we observe broadly across the corpus. We examine the causes of disagreement in Section~\ref{sec:discussion}.
+Agreement between the two systems is mixed. We examine the causes of disagreement in Section~\ref{sec:discussion}.
 
 \FloatBarrier

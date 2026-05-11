@@ -8,7 +8,7 @@ The articles are relatively short (median length approximately 300 words), topic
 
 \subsection{Train / Validation / Test Split}
 
-We apply a stratified split to preserve the class distribution in every partition. The dataset is divided into 80\% training, 10\% validation, and 10\% test, yielding 1,777 training, 221 validation, and 227 test articles. Stratification ensures that even the smaller categories (entertainment, tech) are adequately represented in every partition. The random seed is fixed at 42 for reproducibility.
+We apply a stratified split to preserve the class distribution in every partition. The dataset is divided into 80\% training, 10\% validation, and 10\% test, yielding 1,777 training, 221 validation, and 227 test articles. The validation split is reserved for possible model selection or sanity checks, so the test set stays untouched in the final report. Stratification ensures that even the smaller categories (entertainment, tech) are adequately represented in every partition. The random seed is fixed at 42 for reproducibility.
 
 \begin{table}[!htbp]
 \centering
@@ -33,4 +33,4 @@ Tech          & 401 & 18.0 & 320 & 40 & 41 \\
 
 \subsection{Sentiment Labels}
 
-No gold-standard sentiment labels exist for the BBC corpus. Instead, we generate pseudo-labels using VADER \cite{hutto2014vader}: articles with a compound score $\geq 0.05$ are labeled \textit{positive}, those $\leq -0.05$ are labeled \textit{negative}, and strictly neutral articles are discarded. These cutoffs follow VADER's standard guidance: scores close to zero are weak evidence of sentiment, and in factual news writing they are usually better treated as neutral. Discarding the borderline cases reduces label noise and produces a binary sentiment dataset drawn entirely from BBC text, keeping the vocabulary of the sentiment model consistent with the genre classifier's training domain.
+No gold-standard sentiment labels exist for the BBC corpus. Instead, we generate pseudo-labels using VADER \cite{hutto2014vader}: articles with a compound score $\geq 0.05$ are labeled \textit{positive}, those $\leq -0.05$ are labeled \textit{negative}, and articles with scores strictly between those thresholds are discarded as neutral. These cutoffs follow VADER's standard guidance: scores close to zero are weak evidence of sentiment, and in factual news writing they are usually better treated as neutral. Discarding the borderline cases reduces label noise and produces a binary sentiment dataset drawn entirely from BBC text, keeping the vocabulary of the sentiment model consistent with the genre classifier's training domain.

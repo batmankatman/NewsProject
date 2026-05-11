@@ -19,7 +19,7 @@ Unlike many production NLP pipelines, we deliberately avoid stemming or lemmatiz
 \subsection{Feature Extraction}
 
 \paragraph{Bag-of-Words for classification.}
-Both the genre and sentiment classifiers represent documents as bags of words, i.e., unordered multisets of tokens after preprocessing. When \texttt{binarize=True} (disabled by default), each token type is counted at most once per document, converting the representation to a binary presence/absence feature vector. In practice we found standard token counts to perform comparably to binarized counts on this corpus.
+Both the genre and sentiment classifiers represent documents as bags of words, i.e., unordered multisets of tokens after preprocessing. The preprocessing utility also supports an optional \texttt{binarize} mode, which collapses repeated tokens to presence/absence features; the reported experiments use the default count-based representation (\texttt{BINARIZE=False}).
 
 \paragraph{TF-IDF for keyword ranking.}
 For keyword extraction we build an inverted index over all 2,225 articles and compute TF-IDF weights using the standard log-frequency formulation:
@@ -48,7 +48,5 @@ Sentiment classification uses two independent systems whose outputs are compared
 \begin{itemize}
     \item \textbf{VADER} \cite{hutto2014vader}: a rule-based analyzer using a curated sentiment lexicon with heuristics for capitalization, punctuation, and valence shifters (negation, degree adverbs). It produces a compound score in $[-1, +1]$; we threshold at $\pm 0.05$ to assign positive/negative/neutral labels.
 
-    \item \textbf{NB Sentiment}: the same Multinomial Naive Bayes architecture used for genre classification, trained on BBC articles pseudo-labeled by VADER (neutral articles excluded). Training on in-domain text means the model has seen the vocabulary and syntactic patterns of news writing, which we hypothesize should produce more reliable sentiment predictions than a model trained on movie reviews or social media.
+    \item \textbf{NB Sentiment}: the same Multinomial Naive Bayes architecture used for genre classification, trained on BBC articles pseudo-labeled by VADER; articles with compound scores in the neutral band $(-0.05, 0.05)$ are excluded. Training on in-domain text means the model has seen the vocabulary and syntactic patterns of news writing, which we hypothesize should produce more reliable sentiment predictions than a model trained on movie reviews or social media.
 \end{itemize}
-
-The threshold rule above is the main sentiment-specific design choice, so we omit a separate distribution plot here.

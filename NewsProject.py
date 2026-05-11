@@ -1,27 +1,3 @@
-# ============================================================
-# NewsProject.py — Entry point
-#
-# NLP Pipeline: BBC News Genre Classification,
-# Keyword Extraction, and Sentiment Analysis + Live RSS Demo
-#
-# Modules:
-#   config.py        — global parameters
-#   preprocessing.py — tokenization and cleaning
-#   naive_bayes.py   — Multinomial NB + K-Fold CV
-#   tfidf.py         — TF-IDF index and scoring
-#   keywords.py      — TF-IDF/POS keywords, NER
-#   sentiment.py     — BBC-trained NB + VADER
-#   dataset.py       — BBC dataset loading and splitting
-#   pipeline.py      — article analysis, display, RSS demo
-#
-# Usage:
-#   python NewsProject.py
-#   python NewsProject.py --skip-cv       (faster, skips cross-validation)
-#
-# Requirements:
-#   pip install nltk scikit-learn feedparser
-#   BBC dataset: http://mlg.ucd.ie/files/datasets/bbc-fulltext.zip
-# ============================================================
 import random
 import sys
 
